@@ -15,3 +15,12 @@ Fires when freezetime starts.
 Fires on round end and returns the winning team
 - T
 - CT
+
+### bombPlanted
+Fires when the bomb is planted
+
+### bombDefused
+Fires when the bomb is defused
+
+### bombExploded
+Fires when the bomb explodes

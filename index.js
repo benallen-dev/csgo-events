@@ -27,7 +27,6 @@ function CsgoEvents() {
 
   app.post('/', function (req, res) {
     if (typeof req.body !== 'undefined') {
- 
       self.process(req.body);
     }
   });
@@ -36,9 +35,12 @@ function CsgoEvents() {
   this._previousState = '';
 }
 
-CsgoEvents.prototype.updateState = function(newstate) {
-  this._previousState = this._currentState;
-  this._currentState = newstate;
+CsgoEvents.prototype.updateState = function (newstate, data) {
+  if (this._currentState !== newstate) {
+    this._previousState = this._currentState;
+    this._currentState = newstate;
+    this.emit(newstate, data);
+  }
 }
 
 CsgoEvents.prototype.process = function (data) {
@@ -46,42 +48,35 @@ CsgoEvents.prototype.process = function (data) {
 
   if (typeof data.round !== 'undefined') {
 
-     switch (data.round.phase) {
+    switch (data.round.phase) {
       case 'live':
-        if (this._currentState !== 'live') {
-          this.updateState('live');
-          this.emit('roundLive');
+        if (typeof data.round.bomb !== 'undefined') {
+          // data.round.bomb only becomes defined once
+          // the bomb is planted.
+          this.updateState('bombPlanted');
+        }
+        else {
+          this.updateState('roundLive');
         }
         break;
       case 'freezetime':
-        if (this._currentState !== 'freezetime') {
-          this.updateState('freezetime');
-          this.emit('roundFreezetime');
-        }
+        this.updateState('roundFreezetime');
         break;
       case 'over':
-        if (this._currentState !== 'over') {
-          this.updateState('over');
-          this.emit('roundOver', data.round.win_team);
+        if (typeof data.round.bomb !== 'undefined') {
+          switch (data.round.bomb) {
+            case 'defused':
+              this.updateState('bombDefused');
+              break;
+            case 'exploded':
+              this.updateState('bombExploded');
+              break;
+          }
         }
- 
+        else {
+          this.updateState('roundOver', data.round.win_team);
+        }
         break;
-    }
-
-    if (typeof data.round.bomb !== 'undefined') {
-      //       exploded, planted, defused
- 
-      switch (data.round.bomb) {
-        case 'planted':
-      
-          break;
-        case 'defused':
-          
-          break;
-        case 'exploded':
-      
-          break;
-      }
     }
   }
 };
