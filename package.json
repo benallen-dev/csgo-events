@@ -1,0 +1,27 @@
+{
+  "name": "csgo-events",
+  "version": "0.1.0",
+  "description": "Fires events when CSGO game state changes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SteveMacAwesome/csgo-events.git"
+  },
+  "keywords": [
+    "csgo",
+    "gsi"
+  ],
+  "author": "Ben \"Steve macAwesome\" Allen",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/SteveMacAwesome/csgo-events/issues"
+  },
+  "homepage": "https://github.com/SteveMacAwesome/csgo-events#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4"
+  }
+}
