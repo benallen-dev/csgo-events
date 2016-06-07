@@ -6,14 +6,11 @@ module.exports = CsgoEvents;
 var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
-var cors = require('cors');
 
 require('util').inherits(CsgoEvents, require('events').EventEmitter);
 
 var app = express();
 var server = http.createServer(app);
-
-app.use(cors());
 
 app.use(bodyParser.json());          // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({       // to support URL-encoded bodies
