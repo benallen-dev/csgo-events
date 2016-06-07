@@ -35,13 +35,16 @@ function CsgoEvents() {
   
   io.on('connection', function(socket){
     console.log('Socket.io connection established');
+    
+    socket.on('disconnect', function() {
+      // disconnect handler
+    });
+    
+    socket.on('ext', function (data) {
+      this.emit('extRequest', data);
+    });
   });
   
-  /*
-   * io.on('myMsg', function(msg){
-   *   // Process your custom message here
-   * });
-   */
 
   this._currentState = '';
   this._previousState = '';
