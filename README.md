@@ -3,6 +3,9 @@ Node.js module that fires events when CS:GO game state changes.
 
 Some code based on Shaunidiot's CSGOGSI implementation at https://github.com/shaunidiot/node-csgo-gsi
 
+## Socket.io
+The module includes socketio for communication with frontend apps. If you don't need this functionality, feel free to ignore it.
+
 ## Events
 
 ### roundLive

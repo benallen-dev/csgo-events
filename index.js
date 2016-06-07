@@ -12,6 +12,8 @@ require('util').inherits(CsgoEvents, require('events').EventEmitter);
 var app = express();
 var server = http.createServer(app);
 
+var io = require('socket.io')(server);
+
 app.use(bodyParser.json());          // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({       // to support URL-encoded bodies
   extended: true
@@ -30,6 +32,16 @@ function CsgoEvents() {
       self.process(req.body);
     }
   });
+  
+  io.on('connection', function(socket){
+    console.log('Socket.io connection established');
+  });
+  
+  /*
+   * io.on('myMsg', function(msg){
+   *   // Process your custom message here
+   * });
+   */
 
   this._currentState = '';
   this._previousState = '';
