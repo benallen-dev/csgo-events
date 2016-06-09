@@ -26,12 +26,9 @@ app.use(bodyParser.urlencoded({       // to support URL-encoded bodies
 
 function CsgoEvents(msgFormat) {
 
-  if (msgFormat !== 'updated') {
-    this._msgFormat = 'default';
-  }
-  else {
-    this._msgFormat = msgFormat;
-  }
+  this._msgFormat = '';
+
+  if (typeof msgFormat !== 'undefined') this._msgFormat = msgFormat;
 
   var self = this;
   require('events').EventEmitter.call(this);
@@ -68,7 +65,7 @@ CsgoEvents.prototype.updateState = function (newState, data) {
     this._previousState = this._currentState;
     this._currentState = newState;
 
-    if (this._msgFormat === 'default') {
+    if (this._msgFormat !== 'updated') {
       this.emit(newState, data);
     }
     else {
