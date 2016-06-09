@@ -44,10 +44,10 @@ function CsgoEvents(msgFormat) {
   });
 
   io.on('connection', function (socket) {
-    console.log('Socket.io connection');
+    //console.log('Socket.io connection');
 
     socket.on('disconnect', function () {
-      console.log('Socket.io disconnect');
+      //console.log('Socket.io disconnect');
     });
 
     socket.on('ext', function (data) {
