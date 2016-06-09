@@ -51,7 +51,7 @@ function CsgoEvents(msgFormat) {
     });
 
     socket.on('ext', function (data) {
-      this.emit('extRequest', data);
+      self.emit('extRequest', data);
     });
   });
 
