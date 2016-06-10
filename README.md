@@ -42,6 +42,11 @@ csgo.on('csgoEvent', function(msg) {
 });
 
 ```
+## Methods
+
+### .returnData (data)
+Emits a socketIO message named 'returnData' containing `data`.
+
 
 ## Events (new format)
 
