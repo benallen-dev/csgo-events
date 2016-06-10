@@ -112,4 +112,8 @@ CsgoEvents.prototype.process = function (data) {
         break;
     }
   }
-};
+}
+
+CsgoEvents.prototype.returnData = function(data) {
+  io.emit('returnData', data);
+}
