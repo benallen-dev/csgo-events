@@ -1,6 +1,6 @@
 {
   "name": "csgo-events",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Fires events when CSGO game state changes",
   "main": "index.js",
   "scripts": {
