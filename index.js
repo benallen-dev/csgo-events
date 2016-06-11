@@ -122,6 +122,10 @@ CsgoEvents.prototype.process = function (data) {
         break;
     }
   }
+  if (typeof data.map === 'undefined') {
+    // No game in progress
+    this.updateState('noGame');
+  }
 }
 
 CsgoEvents.prototype.returnData = function(data) {

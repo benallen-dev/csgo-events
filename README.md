@@ -71,6 +71,7 @@ csgo.on('extRequest', function(data) {
 - bombDefused
 - bombExploded
 - roundStats (msg.data contains full data object)
+- noGame
 
 ## Events (default)
 
@@ -93,3 +94,6 @@ Fires when the bomb is defused
 
 ### bombExploded
 Fires when the bomb explodes
+
+### noGame
+Fires the first time data is recieved without a `data.map` object, meaning no game is in progress.
