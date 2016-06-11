@@ -102,6 +102,11 @@ CsgoEvents.prototype.process = function (data) {
         }
         break;
       case 'freezetime':
+        // Sending round stats again is necessary because
+        // the CSGO client sometimes sends a round over packet
+        // before updating the score, causing the round stats
+        // event to fire with the old score
+        this.sendRoundStats(data);
         this.updateState('roundFreezetime');
         break;
       case 'over':
