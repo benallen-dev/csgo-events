@@ -58,12 +58,16 @@ function CsgoEvents(msgFormat) {
 
   this._currentState = '';
   this._previousState = '';
+  this._roundStatsSent = false;
+  this._roundStatsForce = false;
 }
 
 CsgoEvents.prototype.updateState = function (newState, data) {
   if (this._currentState !== newState) {
     this._previousState = this._currentState;
     this._currentState = newState;
+    
+    if(newState === 'roundFreezetime') this._roundStatsSent = false;
 
     if (this._msgFormat !== 'updated') {
       this.emit(newState, data);
@@ -80,6 +84,11 @@ CsgoEvents.prototype.updateState = function (newState, data) {
 
 CsgoEvents.prototype.process = function (data) {
   var self = this;
+  
+  if (this._roundStatsForce === true) {
+    this._roundStatsForce = false;
+    this.sendRoundStats(data);
+  }
 
   if (typeof data.round !== 'undefined') {
 
@@ -96,6 +105,7 @@ CsgoEvents.prototype.process = function (data) {
         this.updateState('roundFreezetime');
         break;
       case 'over':
+        this.sendRoundStats(data);
         if (typeof data.round.bomb !== 'undefined') {
           switch (data.round.bomb) {
             case 'defused':
@@ -116,4 +126,19 @@ CsgoEvents.prototype.process = function (data) {
 
 CsgoEvents.prototype.returnData = function(data) {
   io.emit('returnData', data);
+}
+
+CsgoEvents.prototype.sendRoundStats = function(data) {
+  if (this._roundStatsSent === true) return;
+  this._roundStatsSent = true;
+  
+  var msg = {};
+  msg.type = 'roundStats';
+  msg.data = data;
+
+  this.emit('csgoEvent', msg);
+}
+
+CsgoEvents.prototype.forceRoundStats = function() {
+  this._roundStatsForce = true;
 }

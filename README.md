@@ -47,20 +47,30 @@ csgo.on('csgoEvent', function(msg) {
 ### .returnData (data)
 Emits a socketIO message named 'returnData' containing `data`.
 
+### .forceRoundStats()
+Forces roundStats message on next game state update (see below). This only applies to the new message format.
 
 ## Events (new format)
 
 ### csgoEvent
-Fires on a CSGO game state change. If `msg.type` is 'roundOver', `msg.data` contains the winning team, either 'T' or 'CT'.
+Fires on a CSGO game state change. If `msg.type` is 'roundOver', `msg.data` contains the winning team, either 'T' or 'CT'. If `msg.type` is 'roundStats', `msg.data` contains the csgo data object as received.
 
 ### extRequest
-Fires when a socketIO message is received. Usage:
+Fires when an `ext` (external) socketIO message is received. Usage:
 ```javascript
 csgo.on('extRequest', function(data) {
     // log received message to console
     console.log(data);
 });
 ```
+## csgoEvent Message types (new format)
+- roundFreezetime
+- roundLive
+- roundOver (msg.data contains string indicating winning team)
+- bombPlanted
+- bombDefused
+- bombExploded
+- roundStats (msg.data contains full data object)
 
 ## Events (default)
 
@@ -71,7 +81,7 @@ Fires when the round goes live.
 Fires when freezetime starts.
 
 ### roundOver
-Fires on round end and returns the winning team
+Fires on round end and returns the winning team, if the bomb wasn't planted
 - T
 - CT
 
