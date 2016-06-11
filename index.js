@@ -67,7 +67,7 @@ CsgoEvents.prototype.updateState = function (newState, data) {
     this._previousState = this._currentState;
     this._currentState = newState;
     
-    if(newState === 'roundFreezetime') this._roundStatsSent = false;
+    this._roundStatsSent = false;
 
     if (this._msgFormat !== 'updated') {
       this.emit(newState, data);
