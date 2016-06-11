@@ -87,7 +87,7 @@ CsgoEvents.prototype.process = function (data) {
   
   if (this._roundStatsForce === true) {
     this._roundStatsForce = false;
-    this.sendRoundStats(data);
+    this.sendRoundStats(data, true);
   }
 
   if (typeof data.round !== 'undefined') {
@@ -128,9 +128,12 @@ CsgoEvents.prototype.returnData = function(data) {
   io.emit('returnData', data);
 }
 
-CsgoEvents.prototype.sendRoundStats = function(data) {
-  if (this._roundStatsSent === true) return;
-  this._roundStatsSent = true;
+CsgoEvents.prototype.sendRoundStats = function(data, forced) {
+  
+  if (forced !== true) {
+    if (this._roundStatsSent === true) return;
+    this._roundStatsSent = true;
+  }
   
   var msg = {};
   msg.type = 'roundStats';
